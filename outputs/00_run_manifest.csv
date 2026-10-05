@@ -1,2 +1,0 @@
-input_file,input_sha256,python,platform,numpy,pandas,statsmodels,seed,bootstrap_replications,full_reproduction
-shelters_non-host.xlsx,3225cd593eee75dc439caf52eda54332911fce22a4052917885baef9991be76f,3.11.5,macOS-15.6.1-arm64-arm-64bit,1.24.3,2.1.4,0.14.6,20261002,9999,True
