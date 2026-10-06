@@ -45,8 +45,9 @@ The dataset combines information on:
 -   urbanity and regional classifications;
 -   Land and Kreis identifiers.
 
-The refugee-centre data are based on a manually compiled registry of
-state-run primary reception facilities. Distance is measured as
+The refugee-centre data are based on a registry of state-run primary
+reception facilities compiled with the assistance of a generative AI model
+from the official websites of all 16 Länder. Distance is measured as
 straight-line distance from the municipality representative point to the
 nearest facility.
 
@@ -168,12 +169,12 @@ analysis/
 │     1  H3: distance × ethnic diversity                                  -> 08–08e, figure 4
 │     2  centres / capacity within 25 and 50 km, capacity moderation      -> 09
 │     3  GERDA 2013–2025: 2013 placebo, changes, coefficient profile      -> 10–12, figure 5
-│     4  + Zensus 2022 education and unemployment                         -> 13, 13b
+│     4  + Zensus 2022 education and unemployment; turnout check          -> 13, 13b, 15
 │     5  H3 with pre-crisis diversity (Zensus 2011), "–" sensitivity      -> 14, 14b
 │     6  map of AfD 2025 by district and the 157 centres                  -> figure 0
 └── build_derived_data.ipynb             how data/derived/ was built from the raw sources
 data/derived/                            inputs of extensions_analysis.ipynb (committed)
-outputs_extensions/                      tables 08–14b and figures 0, 4, 5
+outputs_extensions/                      tables 08–15 and figures 0, 4, 5
 ```
 
 Open `analysis/extensions_analysis.ipynb` from the `analysis/` folder and run all cells (about
@@ -202,27 +203,34 @@ dummies enter the models. Raw files are not committed (`data/raw/` is ignored).
 
 **Main extension results**
 
-* *Timing.* With the same municipalities observed in 2013, 2017, 2021 and 2025, none of the
-  distance associations exists in 2013, the last election before the 2015–16 arrivals; they appear
-  in 2017 (`11_…`, figure 5).
-* *West, H1 in changes.* AfD gains 2013→2017 were larger closer to a centre: −0.44 per log-km with
-  Land FE (WCB p = 0.027 / 0.012) and −0.21 within Kreis (0.046 / 0.043); with Zensus 2022
-  education and unemployment −0.58 (0.001 / <0.001) and −0.26 (0.010 / 0.008) (`12_…`, `13_…`).
+*Controls in change models.* Level models use the 15 controls of the main notebook. In models of the
+change in AfD share from a start year (e.g. 2013→2017), 2021 turnout is measured after the change
+starts, so it is replaced by turnout in the start year (GERDA). Table `15_…` shows the key change
+models with 2013 turnout (main), 2021 turnout and no turnout control.
+
+* *Timing.* With the same municipalities observed in 2013, 2017, 2021 and 2025, the West and all
+  Land-FE distance coefficients are zero in 2013, the last election before the 2015–16 arrivals, and
+  appear in 2017 (`11_…`, figure 5). With Kreis FE, Germany (−0.16) and the East (−0.38) show a
+  negative 2013 coefficient (WCB p ≈ 0.02); the analysis therefore relies on changes, not levels.
+* *West, H1 in changes.* AfD gains 2013→2017 were larger closer to a centre: −0.46 per log-km with
+  Land FE (WCB p = 0.015 / 0.005) and −0.21 within Kreis (0.035 / 0.033); with Zensus 2022
+  education and unemployment −0.57 (0.001 / <0.001) and −0.26 (0.009 / 0.006) (`12_…`, `13_…`).
+  The association fades by 2021.
 * *West, H3.* Within Kreis, the distance slope depends on the district foreign share: +0.54 per SD
-  in 2025 levels (WCB p = 0.002 / 0.003), +0.36 for the 2013→2017 change and +0.63 for 2013→2025
-  (p ≤ 0.001); zero in 2013. Closer means more AfD in low-diversity districts and not in
+  in 2025 levels (WCB p = 0.002 / 0.003), +0.34 for the 2013→2017 change and +0.58 for 2013→2025
+  (p ≤ 0.002); −0.09 (p = 0.29) in 2013. Closer means more AfD in low-diversity districts and not in
   high-diversity ones (`08_…`, figure 4). The pooled Germany interaction is an East/West
   composition artefact (`08b_…`). Municipal foreign share (Zensus 2022) does not moderate.
-* *H3 with pre-crisis diversity.* Using the foreign share from the 2011 census (before the
-  2015–16 arrivals), the result is unchanged: district share × distance, Kreis FE, change
-  2013→2017 +0.37 (WCB p < 0.001 / < 0.001), with education controls +0.33 (0.001 / < 0.001);
-  2013 placebo −0.04 (p = 0.54). The municipal 2011 share also moderates the 2013→2017 change
-  (+0.18, p = 0.001 / 0.002), i.e. within districts as well (`14_…`). Cells published as “–”
-  (nothing present) are coded as zero; because SAFE turns counts of 1–2 into 0 or 3, the models are
-  re-estimated with “–” = 1, “–” = 2 and with those municipalities dropped, with unchanged results
-  (`14b_…`).
-* *East.* With Land FE the positive coefficient appears in 2017 (change 2013→2017: +1.38,
-  WCB p = 0.003 / <0.001) and is partly accounted for by unemployment (+1.00 with education
+* *H3 with pre-crisis diversity.* With the foreign share from the 2011 census (before the 2015–16
+  arrivals) the result holds: district share × distance, Kreis FE, change 2013→2017 +0.34
+  (WCB p < 0.001 / < 0.001), with education controls +0.30 (0.002 / 0.002); 2013 placebo −0.04
+  (p = 0.54). The municipal 2011 share also moderates the 2013→2017 change (+0.15, p = 0.006 / 0.007),
+  i.e. within districts as well, but not significantly the 2013→2025 change (`14_…`). Cells published
+  as “–” (nothing present) are coded as zero; because SAFE turns counts of 1–2 into 0 or 3, the models
+  are re-estimated with “–” = 1, “–” = 2 and with those municipalities dropped (district +0.26,
+  p = 0.010 / 0.004; municipal +0.14, p = 0.004 / 0.003) (`14b_…`).
+* *East.* With Land FE the positive coefficient appears in 2017 (change 2013→2017: +1.33,
+  WCB p = 0.003 / <0.001) and is partly accounted for by unemployment (+0.96 with education
   controls); it is zero within Kreis.
 * *Not supported.* Capacity of the nearest centre does not moderate; the number of centres within
   50 km (West) is already associated with AfD in 2013, so it reflects where centres are placed.
