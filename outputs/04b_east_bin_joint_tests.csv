@@ -1,0 +1,5 @@
+sample,test,F,p,df_num,df_denom,cluster
+East,All non-reference bins = 0,2.977005088972855,0.025240427260005423,4,67.0,Kreis_code
+East,Non-reference bins equal each other,1.2025236090797937,0.31564385781446297,3,67.0,Kreis_code
+East excluding MV municipalities,All non-reference bins = 0,2.2153643222681283,0.07797178065384879,4,60.0,Kreis_code
+East excluding MV municipalities,Non-reference bins equal each other,0.7287241049114473,0.5388744189517484,3,60.0,Kreis_code

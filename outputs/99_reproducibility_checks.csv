@@ -1,0 +1,13 @@
+check,passed,detail
+Non-host sample,True,hosts=0
+Baseline N,True,N=10070
+Constant N in ladder,True,"[10070, 10070, 10070, 10070, 10070]"
+Ladder N = baseline N,True,
+Old foreign-share robustness uses baseline N,True,
+Audited ladder coefficients,True,"got=[3.641, 0.832, 1.031, 0.191, 0.036]"
+Audited East Land-FE beta,True,beta=1.3637
+Audited East Kreis-FE beta,True,beta=0.0072
+LOO has one row per estimation-sample cluster,True,"rows=107, expected=107 (shelter=39, Kreis=68)"
+LOO drops at least one estimation observation,True,min N_dropped=1
+Bootstrap has six rows,True,rows=6
+Categorical WCB is restricted under H0,True,"WCB p-values=[0.0473, 0.0324]"
