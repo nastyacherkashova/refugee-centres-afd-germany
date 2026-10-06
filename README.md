@@ -153,32 +153,36 @@ caution with respect to temporal ordering. Kreis fixed-effects
 specifications contain singleton Kreise and are used primarily to assess
 within-Kreis variation in the main distance coefficient.
 
-## Extensions (H3, dynamics 2013–2025, education)
+## Extensions (H3, dynamics 2013–2025, education, Zensus 2011)
 
-`analysis/extensions/` adds analyses that are run as plain Python scripts, so a `Run All` of the
-notebook (which rebuilds `outputs/` from scratch) never deletes them. Results go to
-`outputs_extensions/`.
+Two further notebooks sit next to the main one. The extension results go to
+`outputs_extensions/`, so a `Run All` of the main notebook (which rebuilds `outputs/` from scratch)
+never deletes them.
 
 ``` text
-analysis/extensions/
-├── common.py                    sample construction identical to the notebook (N = 10,070),
-│                                cluster SEs, fast exact wild cluster bootstrap
-├── 00_build_derived_data.py     rebuilds data/derived/ from data/raw/ (optional)
-├── 01_h3_moderation.py          H3: distance × ethnic diversity              -> 08–08e, figure 4
-├── 02_exposure_capacity.py      centres/capacity within 25/50 km, capacity moderation -> 09
-├── 03_dynamics_2013_2025.py     GERDA 2013–2025: placebo, changes, profile   -> 10–12, figure 5
-├── 04_education_controls.py     + Zensus 2022 education & unemployment       -> 13, 13b
-├── 05_map.py                    map of AfD 2025 by district and the centres -> figure 0
-├── 06_h3_zensus2011.py          H3 with pre-crisis diversity (Zensus 2011)   -> 14, 14b
-└── run_all.py
-data/derived/                    inputs used by the scripts (committed)
-outputs_extensions/              tables 08–13b and figures 0, 4, 5
+analysis/
+├── refugee_centres_afd_analysis.ipynb   main analysis, 2025 cross-section          -> outputs/
+├── extensions_analysis.ipynb            extensions                                  -> outputs_extensions/
+│     0  setup: same sample as the main notebook (N = 10,070), clustered SEs,
+│        fast exact wild cluster bootstrap (checked against outputs/07)
+│     1  H3: distance × ethnic diversity                                  -> 08–08e, figure 4
+│     2  centres / capacity within 25 and 50 km, capacity moderation      -> 09
+│     3  GERDA 2013–2025: 2013 placebo, changes, coefficient profile      -> 10–12, figure 5
+│     4  + Zensus 2022 education and unemployment                         -> 13, 13b
+│     5  H3 with pre-crisis diversity (Zensus 2011), "–" sensitivity      -> 14, 14b
+│     6  map of AfD 2025 by district and the 157 centres                  -> figure 0
+└── build_derived_data.ipynb             how data/derived/ was built from the raw sources
+data/derived/                            inputs of extensions_analysis.ipynb (committed)
+outputs_extensions/                      tables 08–14b and figures 0, 4, 5
 ```
 
-Run `python analysis/extensions/run_all.py` (about 5 minutes). Wild cluster bootstrap p-values use
-the notebook's algorithm and seed (restricted, Rademacher, 9,999 replications); `wcb_fast()`
-computes it in closed form and reproduces all six p-values of `outputs/07_wild_cluster_bootstrap.csv`
-exactly. Every model is checked for a full-rank design matrix.
+Open `analysis/extensions_analysis.ipynb` from the `analysis/` folder and run all cells (about
+7 minutes); the committed notebook already contains all results and figures. Wild cluster bootstrap
+p-values use the main notebook's algorithm and seed (restricted, Rademacher, 9,999 replications);
+`wcb_fast()` computes it in closed form and reproduces all six p-values of
+`outputs/07_wild_cluster_bootstrap.csv` exactly. Every model is checked for a full-rank design
+matrix. `build_derived_data.ipynb` needs the raw files in `data/raw/` (not committed); the map
+section needs the raw registry and is skipped without it. Packages: `requirements.txt`.
 
 **Derived data** (`data/derived/`)
 
@@ -194,8 +198,7 @@ exactly. Every model is checked for a full-rank design matrix.
 Zensus 2022 education results are sample-based and suppressed for small municipalities. Each
 municipality gets its own value where published, otherwise its Gemeindeverband's, otherwise its
 Kreis's (14.6% / 42.9% / 42.4% of municipalities; 67% / 12% / 21% of the population); fill-level
-dummies enter the models. Raw files are not committed (`data/raw/` is ignored); the map script
-needs the raw registry.
+dummies enter the models. Raw files are not committed (`data/raw/` is ignored).
 
 **Main extension results**
 
